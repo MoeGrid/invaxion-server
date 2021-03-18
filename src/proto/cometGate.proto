@@ -1,0 +1,47 @@
+package cometGate;
+
+message Ntf_GameTime {
+    required uint32 gametime = 1;
+}
+
+message Req_UserGameTime {
+}
+
+message Ret_UserGameTime {
+    required uint32 gameTime = 1;
+    required uint32 clientTime = 2;
+}
+
+message LoginGateError {
+    required uint32 errorId = 1;
+}
+
+message LoginGateVerify {
+    required uint32 accId = 1;
+    required string token = 2;
+    required uint32 zoneId = 3;
+    optional string version = 4 [default=""];
+    optional string device = 5 [default=""];
+}
+
+message SelectUserInfo {
+    required uint64 charId = 1;
+    required uint32 accStates = 2;
+}
+
+message SelectUserInfoList {
+    repeated SelectUserInfo userList = 1;
+}
+
+message CreateCharacter {
+    required string name = 1;
+    required uint32 selectCharId = 2;
+    required uint32 language = 3;
+    required uint32 country = 4;
+}
+
+message EnterGame {
+    required uint64 charId = 1;
+    required string deviceInfo = 2;
+}
+

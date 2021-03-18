@@ -1,0 +1,104 @@
+package cometLogin;
+
+message Ret_GameVersion {
+    required string version = 1;
+    required string announcementTitle = 2;
+    required string announcementContent = 3;
+    required uint32 serverState = 4;
+}
+
+message GatewayServerData {
+    required string gateIP = 1;
+    required uint32 gatePort = 2;
+    required string token = 3;
+    required uint32 accId = 4;
+}
+
+message Req_RegAccount {
+    required string accountName = 1;
+    required string mail = 2;
+    required string password = 3;
+}
+
+message Ret_RegAccount {
+    required GatewayServerData data = 1;
+}
+
+message Req_LoginAccount {
+    required string accountName = 1;
+    required string password = 2;
+}
+
+message Ret_LoginAccount {
+    required GatewayServerData data = 1;
+}
+
+message Req_FindPassword {
+    required string accountName = 1;
+    required string mail = 2;
+    required string password = 3;
+}
+
+message Ret_FindPassword {
+    required GatewayServerData data = 1;
+}
+
+message LoginError {
+    required uint32 errorId = 1;
+}
+
+message Req_QuickToken {
+}
+
+message Ret_QuickToken {
+    required string token = 1;
+}
+
+message Req_QuickLogin {
+    required string token = 1;
+}
+
+message Ret_QuickLogin {
+    required GatewayServerData data = 1;
+}
+
+message Req_ThirdLogin {
+    required string openId = 1;
+}
+
+message Ret_ThirdLogin {
+    required GatewayServerData data = 1;
+}
+
+message Req_BindAccount {
+    required string token = 1;
+    required string accountName = 2;
+    required string password = 3;
+}
+
+message Ret_BindAccount {
+}
+
+message Req_Announcement {
+}
+
+message Ret_Announcement {
+    required string title = 1;
+    required string content = 2;
+}
+
+message Req_GameVersion {
+    required uint32 type = 1;
+    optional uint32 language = 2 [default=0];
+}
+
+message Req_BiliLogin {
+    required uint32 uid = 1;
+    required string access_key = 2;
+    required string deviceInfo = 3;
+}
+
+message Ret_BiliLogin {
+    required GatewayServerData data = 1;
+}
+

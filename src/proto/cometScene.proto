@@ -1,0 +1,1468 @@
+package cometScene;
+
+message Ret_FinishSong {
+    required SingleSongInfo songInfo = 1;
+    optional SettleData settleData = 2 [default=null];
+    required uint32 newRank = 3;
+}
+
+message Ret_ActivityBegin {
+    required ActivityData data = 1;
+    optional SettleData settleData = 2 [default=null];
+}
+
+message SingleSongData {
+    required uint32 songId = 1;
+    required uint32 difficulty = 2;
+    required uint32 mode = 3;
+}
+
+message SettleData {
+    repeated SettleItemData changeList = 1;
+    repeated SettleItemData updateList = 2;
+    optional PlayerExpData expData = 3 [default=null];
+}
+
+message SettleItemData {
+    required uint32 type = 1;
+    required int32 count = 2;
+    required uint32 id = 3;
+}
+
+message Req_ActivityBegin {
+    required uint32 songId = 1;
+    required uint32 isHighCost = 2;
+}
+
+message Req_Arcade_Info {
+}
+
+message Ret_Arcade_Info {
+    repeated ArcadeStageData stageList = 1;
+}
+
+message ArcadeStageData {
+    required uint32 stageId = 1;
+    repeated SingleSongData songList = 2;
+}
+
+message MissionData {
+    required uint32 id = 1;
+    required uint32 type = 2;
+    required uint32 param = 3;
+    required uint32 paramAdd = 4;
+}
+
+message ItemData {
+    required uint32 type = 1;
+    required uint32 count = 2;
+    required uint32 id = 3;
+}
+
+message AnnouncementOneData {
+    required string title = 1;
+    required string content = 2;
+    required uint32 picId = 3;
+    required uint32 tag = 4;
+}
+
+message LevelGiftData {
+    repeated uint32 getList = 1;
+}
+
+message GetStaminaData {
+    required uint32 isGet = 1;
+}
+
+message NewPlayerData {
+    required uint32 loginDay = 1;
+    repeated uint32 getList = 2;
+}
+
+message WeekCheckinData {
+    required uint32 loginDay = 1;
+    repeated uint32 getList = 2;
+    repeated WeekCheckinRewardData rewardList = 3;
+}
+
+message CommonEventData {
+    required uint64 beginTime = 1;
+    required uint64 endTime = 2;
+    required uint32 value = 3;
+    repeated uint32 getList = 4;
+    repeated CommonEventOneData rewardList = 5;
+}
+
+message SpecialEventData {
+    required uint64 beginTime = 1;
+    required uint64 endTime = 2;
+    required uint32 id = 3;
+    repeated SpecialEventOneData list = 4;
+}
+
+message Ntf_RechangeUpdate {
+    required uint32 value = 1;
+}
+
+message Ntf_Event_NewReleaseUpdate {
+    required uint32 type = 1;
+    required uint32 index = 2;
+    required uint32 value = 3;
+}
+
+message SpecialEventOneData {
+    required uint32 index = 1;
+    required uint32 type = 2;
+    required uint32 condition = 3;
+    required uint32 value = 4;
+    required uint32 isGet = 5;
+    repeated ItemData rewardList = 6;
+}
+
+message AnnouncementPicData {
+    required string title = 1;
+    required uint32 picId = 2;
+    required uint32 jumpType = 3;
+}
+
+message Ret_Event_GetCommon {
+    required uint32 index = 1;
+    required SettleData settleData = 2;
+}
+
+message CommonEventOneData {
+    required uint32 index = 1;
+    repeated ItemData rewardList = 2;
+    required uint32 condition = 3;
+}
+
+message Req_Event_WeekCheckin {
+    required uint32 day = 1;
+}
+
+message Req_Event_Info {
+}
+
+message Ret_Event_Info {
+    required LevelGiftData levelGift = 1;
+    required GetStaminaData getStamina = 2;
+    required NewPlayerData newPlayer = 3;
+    required WeekCheckinData weekCheckin = 4;
+    optional CommonEventData recharge = 5 [default=null];
+    optional CommonEventData login = 6 [default=null];
+    optional CommonEventData newCharLogin = 7 [default=null];
+    optional CommonEventData newThemeLogin = 8 [default=null];
+    optional SpecialEventData newCharRelease = 9 [default=null];
+    optional SpecialEventData newThemeRelease = 10 [default=null];
+    optional SpecialEventData friend = 11 [default=null];
+    optional SpecialEventData bili = 12 [default=null];
+}
+
+message FriendBaseInfo {
+    required uint64 charId = 1;
+    required string charName = 2;
+    required uint32 isOnline = 3;
+    required uint32 level = 4;
+    required uint32 headId = 5;
+    required uint32 preRankId = 6;
+    required uint32 country = 7;
+    required uint32 preRankId4K = 8;
+    required uint32 preRankId6K = 9;
+    required uint32 titleId = 10;
+}
+
+message Req_Event_LevelGift {
+    required uint32 level = 1;
+}
+
+message Req_Event_Stamina {
+}
+
+message Req_Event_NewPlayer {
+    required uint32 day = 1;
+}
+
+message Req_Event_Login {
+    required uint32 index = 1;
+}
+
+message Req_Event_Recharge {
+    required uint32 index = 1;
+}
+
+message Req_Event_NewCharLogin {
+    required uint32 index = 1;
+}
+
+message Req_Event_NewThemeLogin {
+    required uint32 index = 1;
+}
+
+message Req_Event_NewThemeRelease {
+    required uint32 index = 1;
+}
+
+message Req_Event_NewCharRelease {
+    required uint32 index = 1;
+}
+
+message Req_Event_Friend {
+    required uint32 index = 1;
+}
+
+message Req_Event_Bili {
+    required uint32 index = 1;
+}
+
+message TotalSongRankData {
+    required uint32 rank = 1;
+    required string charName = 2;
+    required uint32 headId = 3;
+    required uint64 score = 4;
+    required uint32 country = 5;
+    optional uint32 param = 6 [default=0];
+    optional string teamName = 7 [default=""];
+    optional uint32 titleId = 8 [default=0];
+}
+
+message FieldSongData {
+    required SingleSongData songData = 1;
+    required uint32 score = 2;
+}
+
+message FieldInfo {
+    required uint32 fieldId = 1;
+    repeated FieldSongData songList = 2;
+    required uint32 myScore = 3;
+    repeated TotalSongRankData top3List = 4;
+    required string teamName = 5;
+}
+
+message Ret_BattleFieldInfo {
+    repeated FieldInfo fieldList = 1;
+    required uint32 playerChallengeCount = 2;
+    required uint32 teamChallengeCount = 3;
+    required uint32 inRestTime = 4;
+}
+
+message Ret_BattleFieldRankInfo {
+    repeated TotalSongRankData list = 1;
+}
+
+message Req_BattleFieldInfo {
+}
+
+message Req_BattleFieldRankInfo {
+    required uint32 fieldId = 1;
+}
+
+message Req_BattleFieldBegin {
+    required uint32 fieldId = 1;
+}
+
+message Ret_BattleFieldBegin {
+    required uint32 challengeCount = 1;
+    optional SettleData settleData = 2 [default=null];
+}
+
+message PlayerExpData {
+    required uint32 level = 1;
+    required uint32 curExp = 2;
+    required uint32 maxExp = 3;
+}
+
+message Req_BattleFieldFinish {
+    required uint32 fieldId = 1;
+    repeated songFinishData list = 2;
+}
+
+message songFinishData {
+    required uint32 songId = 1;
+    required uint32 mode = 2;
+    required uint32 difficulty = 3;
+    required PlayData playData = 4;
+    required uint32 totalScore = 5;
+    optional uint32 total4KScore = 6 [default=0];
+    optional uint32 total6KScore = 7 [default=0];
+    optional uint32 total8KScore = 8 [default=0];
+}
+
+message PlayData {
+    required uint32 finishLevel = 1;
+    required uint32 score = 2;
+    required uint32 combo = 3;
+    required uint32 isFullCombo = 4;
+    required uint32 maxPercent = 5;
+    required uint32 miss = 6;
+    required uint32 just = 7;
+    required uint32 life = 8;
+    required uint32 accuracy = 9;
+    required uint32 isAllMax = 10;
+}
+
+message Ret_BattleFieldFinish {
+    required uint32 fieldId = 1;
+    required uint32 score = 2;
+    required uint32 rank = 3;
+}
+
+message Ret_Guide {
+    required uint32 step = 1;
+}
+
+message Req_Guide {
+    required uint32 step = 1;
+}
+
+message Ret_GuideClear {
+}
+
+message Req_GuideClear {
+}
+
+message CharData {
+    required uint32 charId = 1;
+    required uint32 level = 2;
+    required uint32 exp = 3;
+    required uint32 playCount = 4;
+}
+
+message PreRankSingleLevelData {
+    required uint32 levelId = 1;
+    required uint32 curState = 2;
+    required uint32 percent = 3;
+    required uint32 score = 4;
+}
+
+message Req_PreRank_Info {
+}
+
+message Ret_PreRank_Info {
+    required PreRankData preRank = 1;
+    required PreRankData preRank4K = 2;
+    required PreRankData preRank6K = 3;
+}
+
+message PreRankData {
+    repeated PreRankSingleLevelData list = 1;
+    required uint32 curRank = 2;
+}
+
+message PreRankListData {
+    required uint64 charId = 1;
+    required uint32 rank = 2;
+    required string charName = 3;
+    required uint32 headId = 4;
+    required uint32 score = 5;
+    required uint32 percent = 6;
+    required uint32 country = 7;
+}
+
+message Ret_PreRank_RankList {
+    repeated PreRankListData list = 1;
+    required uint32 levelId = 2;
+    required uint32 type = 3;
+}
+
+message Req_PreRank_Begin {
+    required uint32 levelId = 1;
+    required uint32 type = 2;
+}
+
+message Ret_PreRank_Begin {
+    required uint32 levelId = 1;
+    required uint32 type = 2;
+    required SettleData settleData = 3;
+}
+
+message Req_PreRank_RankList {
+    required uint32 levelId = 1;
+    required uint32 type = 2;
+}
+
+message Ret_PreRank_End {
+    required uint32 newRank = 1;
+    required uint32 type = 2;
+    optional PreRankSingleLevelData openData = 3 [default=null];
+    optional SettleData settleData = 4 [default=null];
+}
+
+message Ret_Social_PublishDynamics {
+    repeated string contentList = 1;
+}
+
+message Req_Social_PublishDynamics {
+    repeated string contentList = 1;
+    required uint32 isShare = 2;
+}
+
+message Req_PreRank_End {
+    required PreRankSingleLevelData data = 1;
+    required uint32 type = 2;
+}
+
+message Ntf_Social_DelFriend {
+    required uint64 charId = 1;
+}
+
+message Ntf_Social_AddFriendRequest {
+    required FriendBaseInfo info = 1;
+}
+
+message Ntf_Social_DisposeFriendRequest {
+    required FriendBaseInfo info = 1;
+}
+
+message Ntf_Social_FriendPublicDynamic {
+    required uint64 friendId = 1;
+    required DynamicData data = 2;
+}
+
+message DynamicData {
+    required uint64 time = 1;
+    required string content = 2;
+    required uint32 index = 3;
+    required uint32 like = 4;
+    required uint32 isShare = 5;
+}
+
+message Req_Social_FriendDynamics {
+}
+
+message Ret_Social_FriendDynamics {
+    repeated FriendDynamics list = 1;
+}
+
+message FriendDynamics {
+    required uint64 friendId = 1;
+    repeated DynamicData list = 2;
+}
+
+message PayItemInfo {
+    required uint32 type = 1;
+    required string productId = 2;
+    required int32 price = 3;
+    required int32 normal = 4;
+    required int32 extra = 5;
+    required int32 first = 6;
+    required int32 isFirst = 7;
+    required int32 CNYPrice = 8;
+}
+
+message ShopItemInfo {
+    required int32 id = 1;
+    required int32 costType = 2;
+    required int32 normalPrice = 3;
+    required int32 discountPrice = 4;
+    required int32 order = 5;
+    required uint64 beginSaleTime = 6;
+    required uint64 discountBeginTime = 7;
+    required uint64 discountEndTime = 8;
+}
+
+message Ret_SummonWeekReward {
+    required uint32 count = 1;
+    required SettleData settleData = 2;
+}
+
+message Ret_SummonInfo {
+    repeated SummonItemData itemList = 1;
+    required uint32 oneNormalPrice = 2;
+    required uint32 fiveNormalPrice = 3;
+    required uint32 oneRealPrice = 4;
+    required uint32 fiveRealPrice = 5;
+    required uint32 luckyCount = 6;
+    required uint32 oneStamina = 7;
+    required uint32 fiveStamina = 8;
+    required SummonWeekInfo weekInfo = 9;
+}
+
+message SummonWeekInfo {
+    repeated SummonWeekReward rewardList = 1;
+    required uint32 weekCount = 2;
+    repeated uint32 weekGetList = 3;
+}
+
+message ThemeData {
+    required uint32 themeId = 1;
+}
+
+message Ret_ShopBuy {
+    required SettleData settleData = 1;
+}
+
+message VIPLevelReward {
+    required uint32 vipLevel = 1;
+    repeated ItemData rewardList = 2;
+}
+
+message SummonWeekReward {
+    repeated ItemData rewardList = 1;
+    required uint32 count = 2;
+}
+
+message Ret_ShopInfo {
+    repeated ShopItemInfo characterList = 1;
+    repeated ShopItemInfo songList = 2;
+    repeated ShopItemInfo themeList = 3;
+    repeated PayItemInfo payList = 4;
+    repeated PieceInfo pieceList = 5;
+    repeated MemberShopItemInfo memberList = 6;
+    required ShopRecommend shopRecommend = 7;
+    repeated ItemData summonShopList = 8;
+    repeated VIPLevelReward vipRewardList = 9;
+}
+
+message Req_SummonInfo {
+}
+
+message PlayerVIPInfo {
+    required uint32 level = 1;
+    required uint32 exp = 2;
+    required uint32 levelUpExp = 3;
+    required uint32 inSubscription = 4;
+}
+
+message MemberShopItemInfo {
+    required int32 id = 1;
+    required int32 type = 2;
+    required int32 costType = 3;
+    required int32 price = 4;
+}
+
+message Req_SummonWeekReward {
+    required uint32 count = 1;
+}
+
+message ThemeList {
+    repeated ThemeData list = 1;
+}
+
+message Req_ShopBuy {
+    required uint32 shopType = 1;
+    required uint32 itemId = 2;
+}
+
+message ProductList {
+    repeated string list = 1;
+}
+
+message SingleSongInfo {
+    required uint32 songId = 1;
+    required uint32 finishLevel = 2;
+    required uint32 score = 3;
+    required uint32 isFullCombo = 4;
+    required uint32 miss = 6;
+    required uint32 playCount = 7;
+    required uint32 isAllMax = 8;
+}
+
+message DifficultyList {
+    repeated SingleSongInfo easyList = 1;
+    repeated SingleSongInfo normalList = 2;
+    repeated SingleSongInfo hardList = 3;
+}
+
+message ScoreList {
+    required DifficultyList key4List = 1;
+    required DifficultyList key6List = 2;
+    required DifficultyList key8List = 3;
+}
+
+message MailData {
+    required uint64 mailId = 1;
+    required string mailTitle = 2;
+    required string mailContent = 3;
+    repeated ItemData rewards = 4;
+    required uint32 isGet = 5;
+    required uint32 createTime = 6;
+}
+
+message MailList {
+    repeated MailData list = 1;
+}
+
+message SongData {
+    required uint32 songId = 1;
+}
+
+message SongList {
+    repeated SongData list = 1;
+    repeated uint32 favoriteList = 2;
+}
+
+message CharacterList {
+    repeated CharData list = 1;
+}
+
+message SocialData {
+    repeated FriendBaseInfo friendList = 1;
+    repeated FriendBaseInfo requestList = 2;
+}
+
+message AnnouncementData {
+    repeated AnnouncementOneData list = 1;
+    repeated AnnouncementPicData picList = 2;
+}
+
+message PlayerBaseInfo {
+    required uint32 accId = 1;
+    required int64 charId = 2;
+    required string charName = 3;
+    required uint32 headId = 4;
+    required uint32 level = 5;
+    required uint32 curExp = 6;
+    required uint32 maxExp = 7;
+    required uint32 guideStep = 8;
+    required uint32 curCharacterId = 9;
+    required uint32 curThemeId = 10;
+    required uint32 onlineTime = 11;
+    required uint32 needReqAppReceipt = 12;
+    required uint32 activePoint = 13;
+    required uint32 preRankId = 14;
+    repeated uint32 guideList = 15;
+    required uint32 country = 16;
+    required uint32 preRankId4K = 17;
+    required uint32 preRankId6K = 18;
+    required uint32 titleId = 19;
+}
+
+message PlayerCurrencyInfo {
+    required uint32 gold = 1;
+    required uint32 diamond = 2;
+    required uint32 curStamina = 3;
+    required uint32 maxStamina = 4;
+    required uint32 honourPoint = 5;
+}
+
+message ExperienceInfo {
+    required uint32 id = 1;
+    required uint64 time = 2;
+}
+
+message ArcadeSongInfo {
+    required uint32 songId = 1;
+    required uint32 score = 2;
+    required uint32 miss = 3;
+}
+
+message ArcadeDiffList {
+    repeated ArcadeSongInfo easyList = 1;
+    repeated ArcadeSongInfo normalList = 2;
+    repeated ArcadeSongInfo hardList = 3;
+}
+
+message ArcadeData {
+    required ArcadeDiffList key4List = 1;
+    required ArcadeDiffList key6List = 2;
+    required ArcadeDiffList key8List = 3;
+}
+
+message TitleOneData {
+    required uint32 titleId = 1;
+}
+
+message TitleData {
+    repeated TitleOneData list = 1;
+}
+
+message BuffData {
+    required uint32 id = 1;
+    required uint64 time = 2;
+}
+
+message TeamData {
+    required uint32 teamId = 1;
+    required string teamName = 2;
+    required uint32 uploadSongCount = 3;
+    required uint32 canUploadSong = 4;
+    repeated BuffData buffList = 5;
+}
+
+message CharacterFullData {
+    required PlayerBaseInfo baseInfo = 1;
+    required PlayerCurrencyInfo currencyInfo = 2;
+    required ScoreList scoreList = 3;
+    required SongList songList = 4;
+    required CharacterList charList = 5;
+    required SocialData socialData = 6;
+    required AnnouncementData announcement = 7;
+    repeated ItemData itemList = 8;
+    required ThemeList themeList = 9;
+    required PlayerVIPInfo vipInfo = 10;
+    repeated ExperienceInfo experienceList = 11;
+    required ArcadeData arcadeData = 12;
+    required TitleData titleList = 13;
+    required TeamData team = 14;
+}
+
+message Ret_GameError {
+    required uint32 errorId = 1;
+    required uint32 msgId = 2;
+}
+
+message Ntf_CharacterFullData {
+    required CharacterFullData data = 1;
+}
+
+message Req_BeginSong {
+    required uint32 songId = 1;
+    required uint32 mode = 2;
+    required uint32 difficulty = 3;
+}
+
+message Ret_BeginSong {
+}
+
+message Req_FinishSong {
+    required songFinishData data = 1;
+}
+
+message Req_SingleSongRank {
+    required uint32 songId = 1;
+    required uint32 mode = 2;
+    required uint32 difficulty = 3;
+    optional uint32 isWeek = 4 [default=0];
+}
+
+message SingleSongRankData {
+    required uint32 rank = 1;
+    required string charName = 2;
+    required uint32 score = 3;
+    required uint32 finishLevel = 4;
+    required uint32 headId = 5;
+    required uint64 charId = 6;
+    required uint32 country = 7;
+    optional string teamName = 8 [default=""];
+    optional uint32 titleId = 9 [default=0];
+}
+
+message Ret_SingleSongRank {
+    repeated SingleSongRankData list = 1;
+}
+
+message Req_RankInfo {
+    required uint32 type = 1;
+}
+
+message Ret_RankInfo {
+    repeated TotalSongRankData list = 1;
+    required uint32 type = 2;
+}
+
+message Req_SetFavorite {
+    required uint32 songId = 1;
+    required uint32 isFavorite = 2;
+}
+
+message Ret_SetFavorite {
+    required uint32 songId = 1;
+    required uint32 isFavorite = 2;
+}
+
+message Req_CheckInInfo {
+}
+
+message Ret_CheckInInfo {
+    repeated ItemData list = 1;
+    required uint32 state = 2;
+    required uint32 day = 3;
+}
+
+message Req_CheckIn {
+}
+
+message Ret_CheckIn {
+    required uint32 state = 1;
+    required uint32 day = 2;
+}
+
+message Req_ActivityInfo {
+}
+
+message ActivityData {
+    required uint32 beginTime = 1;
+    required uint32 endTime = 2;
+    required uint32 songId = 3;
+    required uint32 difficulty = 4;
+    required uint32 costType = 5;
+    required uint32 costValue = 6;
+    repeated ItemData itemList = 7;
+    required uint32 bestScore = 8;
+    required uint32 isOpen = 9;
+    required uint32 curCount = 10;
+    required uint32 highCostType = 11;
+    required uint32 highCostValue = 12;
+    repeated MissionData missionList = 13;
+    required uint32 maxCombo = 14;
+}
+
+message Ret_ActivityInfo {
+    repeated ActivityData list = 1;
+}
+
+message Req_ActivityFinish {
+    required uint32 songId = 1;
+    required PlayData playData = 2;
+}
+
+message Ret_ActivityFinish {
+    required ActivityData data = 1;
+    optional SettleData settleData = 2 [default=null];
+}
+
+message Ntf_ActivityChange {
+}
+
+message SummonItemData {
+    required uint32 index = 1;
+    required ItemData item = 2;
+}
+
+message Req_Summon {
+    required uint32 type = 1;
+}
+
+message Ret_Summon {
+    required uint32 luckyCount = 1;
+    repeated uint32 indexList = 2;
+    required SettleData settleData = 3;
+    required uint32 type = 4;
+    required uint32 weekCount = 5;
+}
+
+message Req_SummonShopBuy {
+    required uint32 id = 1;
+}
+
+message Ret_SummonShopBuy {
+    required uint32 id = 1;
+    required SettleData settleData = 2;
+}
+
+message Req_MailList {
+}
+
+message Ret_MailList {
+    required MailList mailList = 1;
+}
+
+message Req_GetMailReward {
+    required uint64 mailId = 1;
+}
+
+message Ret_GetMailReward {
+    required uint64 mailId = 1;
+    optional SettleData settleData = 2 [default=null];
+}
+
+message Req_DelMail {
+}
+
+message Ret_DelMail {
+}
+
+message Ntf_NewMail {
+    required MailData data = 1;
+}
+
+message Req_ShopInfo {
+}
+
+message PieceInfo {
+    required int32 type = 1;
+    required int32 id = 2;
+    required int32 needPieceCount = 3;
+    required int32 pieceId = 4;
+}
+
+message ShopRecommend {
+    repeated ItemData hotSellList = 1;
+}
+
+message Req_PieceExchange {
+    required uint32 isShop = 1;
+    required uint32 type = 2;
+    required uint32 id = 3;
+}
+
+message Ret_PieceExchange {
+    required SettleData settleData = 1;
+}
+
+message Req_Social_SearchPlayer {
+    required string name = 1;
+}
+
+message Ret_Social_SearchPlayer {
+    required uint32 result = 1;
+    optional string name = 2 [default=""];
+    optional uint64 charId = 3 [default=0];
+    optional uint32 headId = 4 [default=0];
+    optional uint32 country = 5 [default=0];
+    optional uint32 isOnline = 6 [default=0];
+}
+
+message Req_Social_PlayerProfile {
+    required uint64 charId = 1;
+}
+
+message PlayerProfileData {
+    required string name = 1;
+    required uint32 level = 2;
+    required uint64 charId = 3;
+    required uint32 isOnline = 4;
+    required uint32 country = 5;
+    repeated DynamicData list = 6;
+}
+
+message Ret_Social_PlayerProfile {
+    required PlayerProfileData data = 1;
+}
+
+message Req_Social_SendAddFriendRequest {
+    required uint64 charId = 1;
+}
+
+message Ret_Social_SendAddFriendRequest {
+    required uint64 charId = 1;
+}
+
+message Req_Social_DelFriend {
+    required uint64 charId = 1;
+}
+
+message Ret_Social_DelFriend {
+    required uint64 charId = 1;
+}
+
+message Req_Social_DisposeFriendRequest {
+    required uint64 charId = 1;
+    required uint32 isAccept = 2;
+}
+
+message Ret_Social_DisposeFriendRequest {
+    required uint64 charId = 1;
+}
+
+message Req_Social_DelDynamics {
+    required uint32 index = 1;
+}
+
+message Ret_Social_DelDynamics {
+    required uint32 index = 1;
+}
+
+message Ntf_Social_FriendStatus {
+    required uint64 friendId = 1;
+    required uint32 statusType = 2;
+    required uint32 statusParam = 3;
+}
+
+message StoryData {
+    required uint32 chapterId = 1;
+    required uint32 levelId = 2;
+    required uint32 maxScore = 3;
+    required uint32 maxCombo = 4;
+    required uint32 finishLevel = 6;
+    repeated uint32 missionList = 7;
+    required uint32 curRank = 8;
+}
+
+message SpecialStoryData {
+    required uint32 chapterId = 1;
+    required uint32 curLevelId = 2;
+    repeated StoryData list = 3;
+}
+
+message Req_Story_Info {
+}
+
+message Ret_Story_Info {
+    repeated StoryData list = 1;
+    required uint32 curTutorialChapterId = 2;
+    required uint32 curTutorialLevelId = 3;
+    required uint32 curNormalChapterId = 4;
+    required uint32 curNormalLevelId = 5;
+    repeated SpecialStoryData specialList = 6;
+}
+
+message StoryFinishData {
+    required uint32 chapterId = 1;
+    required uint32 levelId = 2;
+    required PlayData playData = 3;
+}
+
+message Req_Story_Finish {
+    required StoryFinishData data = 1;
+}
+
+message Ret_Story_Finish {
+    required StoryData data = 1;
+    optional SettleData settleData = 2 [default=null];
+    optional uint32 curTutorialChapterId = 3 [default=0];
+    optional uint32 curTutorialLevelId = 4 [default=0];
+    optional uint32 curNormalChapterId = 5 [default=0];
+    optional uint32 curNormalLevelId = 6 [default=0];
+    optional uint32 curSpecialChapterId = 7 [default=0];
+    optional uint32 curSpecialLevelId = 8 [default=0];
+}
+
+message Req_ChangeTitle {
+    required uint32 titleId = 1;
+}
+
+message Ret_ChangeTitle {
+    required uint32 titleId = 2;
+}
+
+message Req_ChangeHeadIcon {
+    required uint32 id = 1;
+}
+
+message Ret_ChangeHeadIcon {
+    required uint32 id = 1;
+}
+
+message Req_ChangeCharacter {
+    required uint32 id = 1;
+}
+
+message Ret_ChangeCharacter {
+    required uint32 id = 1;
+}
+
+message Req_ChangeTheme {
+    required uint32 id = 1;
+}
+
+message Ret_ChangeTheme {
+    required uint32 id = 1;
+}
+
+message Ntf_UpdateInfo {
+    required SettleData settleData = 1;
+}
+
+message Ntf_DelInfo {
+    required uint32 curCharacterId = 1;
+    required uint32 curThemeId = 2;
+    required ItemData delInfo = 3;
+}
+
+message Req_ChangeLanguage {
+    required uint32 language = 1;
+}
+
+message Ret_ChangeLanguage {
+    required uint32 language = 1;
+}
+
+message Req_UseItem {
+    required uint32 id = 1;
+}
+
+message Ret_UseItem {
+    required uint32 id = 1;
+    required uint32 count = 2;
+    required SettleData settleData = 3;
+    optional ExperienceInfo experience = 4 [default=null];
+}
+
+message Req_Rename {
+    required string newName = 1;
+}
+
+message Ret_Rename {
+}
+
+message WeekCheckinRewardData {
+    required uint32 day = 1;
+    required ItemData reward = 2;
+}
+
+message ArcadeFinishData {
+    required uint32 stageId = 1;
+    required songFinishData finishData = 2;
+}
+
+message Req_Arcade_Finish {
+    repeated ArcadeFinishData finishList = 1;
+}
+
+message Ret_Arcade_Finish {
+    optional SettleData settleData = 1 [default=null];
+}
+
+message Req_PVP_BeginMatching {
+}
+
+message Ret_PVP_BeginMatching {
+}
+
+message Req_PVP_EndMatching {
+}
+
+message Ret_PVP_EndMatching {
+}
+
+message PVPPlayerInfo {
+    required uint64 charId = 1;
+    required string charName = 2;
+    required uint32 headId = 3;
+    required uint32 rankLevel = 4;
+}
+
+message Ntf_PVP_MatchSuccess {
+    required uint64 roomId = 1;
+    repeated PVPPlayerInfo list = 2;
+}
+
+message Req_PVP_MatchConfim {
+    required uint64 roomId = 1;
+}
+
+message Ret_PVP_MatchConfim {
+}
+
+message Ntf_PVP_MatchConfim {
+    required uint64 charId = 1;
+}
+
+message Ntf_PVP_StartLoading {
+}
+
+message Req_PVP_FinishLoading {
+    required uint64 roomId = 1;
+}
+
+message Ntf_PVP_FinishLoading {
+    required uint64 charId = 1;
+}
+
+message Ntf_PVP_StartGame {
+    required uint32 songId = 1;
+}
+
+message Req_PVP_SyncScore {
+    required uint64 roomId = 1;
+    required uint32 score = 2;
+}
+
+message PVPScoreInfo {
+    required uint64 charId = 1;
+    required uint32 score = 2;
+}
+
+message Ntf_PVP_SyncScore {
+    repeated PVPScoreInfo list = 1;
+}
+
+message Req_PVP_UseSkill {
+    required uint64 roomId = 1;
+}
+
+message Ntf_PVP_UseSkill {
+}
+
+message Req_PVP_FinishGame {
+    required uint64 roomId = 1;
+}
+
+message Ntf_PVP_FinishGame {
+}
+
+message Req_PVP_CurState {
+    required uint64 roomId = 1;
+}
+
+message Ret_PVP_CurState {
+    required uint32 state = 1;
+}
+
+message Req_BackstageGame {
+    required uint32 isBack = 1;
+}
+
+message TeamBaseInfo {
+    required uint32 teamId = 1;
+    required string teamName = 2;
+    required uint32 rank = 3;
+    required uint32 memberCount = 4;
+    required uint64 leaderId = 5;
+    required string leaderName = 6;
+    required uint64 createTime = 7;
+    required uint32 applyCount = 8;
+    optional string declaration = 9 [default=""];
+    optional uint64 score = 10 [default=0];
+}
+
+message TeamMemberData {
+    required uint64 memberId = 1;
+    required string memberName = 2;
+    required uint32 memberHeadId = 3;
+    required uint32 position = 4;
+    required uint64 offlineTime = 5;
+    required uint32 weekScore = 6;
+    required uint32 seasonScore = 7;
+}
+
+message TeamUploadSongOneData {
+    required uint64 charId = 1;
+    required uint32 score = 2;
+    required uint32 songId = 3;
+    required uint32 diff = 4;
+    required uint32 mode = 5;
+    required uint64 time = 6;
+}
+
+message TeamUploadSongData {
+    repeated TeamUploadSongOneData uploadList = 1;
+    repeated TeamUploadSongOneData confimList = 2;
+    required uint64 confimTime = 3;
+}
+
+message TeamShopOneData {
+    required uint32 type = 1;
+    required uint32 id = 2;
+    required uint32 price = 3;
+    required uint32 season = 4;
+    required uint32 priceOff = 5;
+    required uint32 isSoldOut = 6;
+}
+
+message TeamShopData {
+    required uint32 honourPoint = 1;
+    repeated TeamShopOneData shopList = 2;
+}
+
+message TeamInfoData {
+    required TeamBaseInfo baseInfo = 1;
+    repeated TeamMemberData memberList = 2;
+    required TeamUploadSongData uploadSong = 3;
+    required TeamShopData shop = 4;
+}
+
+message Req_Team_Create {
+    required string teamName = 1;
+    required string teamDeclaration = 2;
+}
+
+message Ret_Team_Create {
+    required uint32 isSuccess = 1;
+    optional uint32 leftTime = 2 [default=0];
+    optional TeamInfoData info = 3 [default=null];
+}
+
+message Req_Team_Search {
+    required string name = 1;
+}
+
+message Ret_Team_Search {
+    required uint32 isFind = 1;
+    optional TeamBaseInfo info = 2 [default=null];
+}
+
+message TeamListData {
+    required uint32 teamId = 1;
+    required string teamName = 2;
+    required uint32 rank = 3;
+    required uint32 memberCount = 4;
+}
+
+message Req_Team_List {
+}
+
+message Ret_Team_List {
+    repeated TeamListData list = 1;
+    repeated uint32 applyList = 2;
+}
+
+message Req_Team_Apply {
+    required uint32 teamId = 1;
+    required uint32 isCancel = 2;
+}
+
+message Ret_Team_Apply {
+    required uint32 isSuccess = 1;
+    optional uint32 leftTime = 2 [default=0];
+}
+
+message Req_Team_Declaration {
+    required string teamDeclaration = 1;
+}
+
+message Ret_Team_Declaration {
+}
+
+message Req_Team_Info {
+}
+
+message Ret_Team_Info {
+    required TeamInfoData info = 1;
+}
+
+message Req_Team_Position {
+    required uint64 memberId = 1;
+    required uint32 position = 2;
+}
+
+message Ret_Team_Position {
+}
+
+message TeamApplyData {
+    required uint64 charId = 1;
+    required string charName = 2;
+    required uint32 level = 3;
+    required uint32 preRankId = 4;
+    required uint32 preRankId4K = 5;
+    required uint32 preRankId6K = 6;
+    required uint32 headId = 7;
+}
+
+message Req_Team_ApplyList {
+}
+
+message Ret_Team_ApplyList {
+    repeated TeamApplyData list = 1;
+}
+
+message Req_Team_DealApply {
+    required uint64 applyCharId = 1;
+    required uint32 isAccept = 2;
+}
+
+message Ret_Team_DealApply {
+    required uint64 applyCharId = 1;
+    optional TeamMemberData newMember = 2 [default=null];
+    optional uint32 memberCount = 3 [default=0];
+}
+
+message Req_Team_Kick {
+    required uint64 memberId = 1;
+}
+
+message Ret_Team_Kick {
+    required uint64 memberId = 1;
+    required uint32 memberCount = 2;
+}
+
+message Req_Team_Exit {
+}
+
+message Ret_Team_Exit {
+}
+
+message Req_Team_Logs {
+}
+
+message TeamLogOneData {
+    required uint32 type = 1;
+    required uint64 logTime = 2;
+    repeated string paramList = 3;
+}
+
+message Ret_Team_Logs {
+    repeated TeamLogOneData logList = 1;
+}
+
+message Ntf_Team_Change {
+    required uint32 teamId = 1;
+    optional string teamName = 2 [default=""];
+}
+
+message Ntf_Team_InfoChange {
+}
+
+message Ntf_Team_ApplyChange {
+    required uint32 applyCount = 1;
+}
+
+message Req_Team_UploadSong {
+    required TeamUploadSongOneData data = 1;
+}
+
+message Ret_Team_UploadSong {
+    required uint32 uploadSongCount = 1;
+}
+
+message Req_Team_ConfimUploadSong {
+    repeated TeamUploadSongOneData list = 1;
+}
+
+message Ret_Team_ConfimUploadSong {
+}
+
+message Req_Team_BuyItem {
+    required uint32 type = 1;
+    required uint32 id = 2;
+}
+
+message Ret_Team_BuyItem {
+    required TeamShopData shop = 1;
+}
+
+message Ntf_Team_BuffList {
+    repeated BuffData buffList = 1;
+}
+
+message Req_BuyProduct {
+    required string productId = 1;
+}
+
+message Ret_BuyProduct {
+    required uint32 orderId = 1;
+    optional string sign = 2 [default=""];
+    optional string notifyURL = 3 [default=""];
+}
+
+message Req_VerifyIOSReceipt {
+    required uint32 orderId = 1;
+    required string receipt = 2;
+}
+
+message Ret_VerifyIOSReceipt {
+    required uint32 status = 1;
+}
+
+message Req_VerifyGooglePay {
+    required uint32 orderId = 1;
+    required string purchaseJson = 2;
+}
+
+message Ret_VerifyGooglePay {
+    required uint32 status = 1;
+}
+
+message Req_MissingOrder {
+}
+
+message Ret_MissingOrder {
+    repeated uint32 orderList = 1;
+}
+
+message Req_SendOrder {
+    required uint32 orderId = 1;
+}
+
+message Ret_SendOrder {
+    required PlayerVIPInfo vipInfo = 1;
+    optional SettleData settleData = 2 [default=null];
+}
+
+message Req_IOSAppReceipt {
+    required string receipt = 1;
+}
+
+message Ret_IOSAppReceipt {
+    required uint32 inSubscription = 1;
+}
+
+message Req_TestVerify {
+    required uint32 orderId = 1;
+}
+
+message Ret_TestVerify {
+    required uint32 orderId = 1;
+}
+

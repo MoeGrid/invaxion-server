@@ -1,0 +1,20 @@
+{
+  "name": "invaxion-server",
+  "version": "1.0.0",
+  "description": "音灵服务端",
+  "main": "src/index.js",
+  "author": "MoeGrid",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "log4js": "^6.3.0",
+    "protobufjs": "^6.10.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
