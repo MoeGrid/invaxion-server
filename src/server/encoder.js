@@ -16,7 +16,7 @@ class Encoder extends stream.Transform {
     _transform(msg, encoding, callback) {
 
         // 获得proto类型
-        const typeStr = cmd(msg.mainCmd, msg.paraCmd);
+        const typeStr = cmd.lookupType(msg.mainCmd, msg.paraCmd);
         if (!typeStr)
             return callback(new Error(`Unknown paraCmd ${msg.paraCmd}`));
         const type = proto.root.lookupType(typeStr);
