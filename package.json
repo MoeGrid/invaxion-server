@@ -12,7 +12,8 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "log4js": "^6.3.0",
-    "protobufjs": "^6.10.2"
+    "protobufjs": "^6.10.2",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
