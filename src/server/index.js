@@ -1,10 +1,9 @@
 const log4js = require('log4js');
 const pipeline = require('./pipeline');
 const logger = log4js.getLogger('app:server:index');
-let sessionid = 0;
 function server(handler) {
     return async function (socket) {
-        sessionid = Date.now();
+        let sessionid = Date.now();
         logger.debug('Connection opened');
         const {input, output} = pipeline.setup(socket);
         for await (const req of input) {

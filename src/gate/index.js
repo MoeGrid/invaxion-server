@@ -128,7 +128,8 @@ handlers.set(4, (req, res, now, sessionid) => {
         score : songInfo["score"],
         isFullCombo : songInfo["isFullCombo"],
         miss : songInfo["miss"],
-        isAllMax : songInfo["isAllMax"]
+        isAllMax : songInfo["isAllMax"],
+        time : Date.now()
     };
     let db = new sqlite3.Database(dbname, function (err) {
         if (err) throw err;
@@ -152,6 +153,8 @@ handlers.set(4, (req, res, now, sessionid) => {
                 if (songInfo["score"]>songInfoOld["score"])newRank = 1;
                 else if (songInfo["score"]<songInfoOld["score"])songInfo = songInfoOld;
                 songInfo["playCount"] = playCount + 1;
+                let songInfo_send = JSON.parse(JSON.stringify(songInfo));  //deep copy
+                delete songInfo_send.time;
                 res.write({
                     mainCmd: 5,
                     paraCmd: 5,
@@ -188,14 +191,47 @@ handlers.set(6, (req, res) => {
     let db = new sqlite3.Database(dbname, function (err) {
         if (err) throw err;
     });
+    let flag_weekly = false;
+    if (req.data.hasOwnProperty("isWeek")) flag_weekly = true;
     db.all("select charId, name, country, headId from acc_data",function (err,data){
         if (err) throw err;
         let charList = {};
         for (let i = 0; i < data.length; i++){
             charList[data[i]["charId"]] = {name : data[i]["name"], country : data[i]["country"], headId : data[i]["headId"]};
         }
+        let deltaTime = Date.now() - 7*24*60*60*1000;
         db.all("select charId, s" + req.data["songId"].toString() + " from char_data where s" + req.data["songId"].toString() + " not null",function (err,data){
-            if (err) throw err;
+            if (err) {  //无打歌记录 忽略
+                res.write({
+                    mainCmd: 5,
+                    paraCmd: 7,
+                    data: {
+                        list : [
+                            {
+                                rank: 1,
+                                charName: "此歌暂时无人游玩",
+                                score: 1,
+                                headId: 10010,
+                                charId: "000000000",
+                                country: 1,
+                                teamName: "",
+                                titleId: 10001
+                            },
+                            {
+                                rank: 2,
+                                charName: "快来争当排行榜第一！",
+                                score: 2,
+                                headId: 10010,
+                                charId: "000000000",
+                                country: 1,
+                                teamName: "",
+                                titleId: 10001
+                            }
+                        ]
+                    }
+                });
+                return;
+            }
             let scoreList = [];
             let mode = req.data["mode"].toString();
             let difficulty = req.data["difficulty"].toString();
@@ -204,12 +240,14 @@ handlers.set(6, (req, res) => {
                 let score = JSON.parse(data[i]["s" + req.data["songId"].toString()]);
                 if (!score.hasOwnProperty(mode)) continue;
                 if (!score[mode].hasOwnProperty(difficulty)) continue;
+                if (flag_weekly && score[mode][difficulty]["time"] < deltaTime) continue;
                 scoreList.push({
                     charId : data[i]["charId"],
-                    score : score[mode][difficulty]["score"]
+                    score : score[mode][difficulty]["score"],
+                    time : score[mode][difficulty]["time"]
                 });
             }
-            scoreList.sort(function (a,b){return b["score"] - a["score"]})
+            scoreList.sort(function (a,b){return (b["score"] === a["score"]) ? a["time"] - b["time"] : b["score"] - a["score"]})
             let rankList = [];
             for (let i = 0; i < scoreList.length; i++){
                 let name = " ";
@@ -227,6 +265,7 @@ handlers.set(6, (req, res) => {
                     headId : headId,
                     charId : scoreList[i]["charId"],
                     country : country,
+                    teamName : "",
                     titleId : 10001
                 });
             }
