@@ -209,7 +209,7 @@ handlers.set(6, (req, res) => {
                     score : score[mode][difficulty]["score"]
                 });
             }
-            scoreList.sort(function (a,b){return a["score"] - b["score"]})
+            scoreList.sort(function (a,b){return b["score"] - a["score"]})
             let rankList = [];
             for (let i = 0; i < scoreList.length; i++){
                 let name = " ";
