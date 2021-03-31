@@ -78,9 +78,42 @@ module.exports = async function (accId = 1, charId = 1, charName = "6031", headI
             "scoreList": await getScoreList(charId),
             "songList": {
                 "list": [
-                    {
-                        "songId": 65036
-                    }
+                    {"songId" : 80031},
+                    {"songId" : 80008},
+                    {"songId" : 80011},
+                    {"songId" : 80012},
+                    {"songId" : 80010},
+                    {"songId" : 80034},
+                    {"songId" : 80007},
+                    {"songId" : 80015},
+                    {"songId" : 80013},
+                    {"songId" : 80009},
+                    {"songId" : 80014},
+                    {"songId" : 80019},
+                    {"songId" : 80020},
+                    {"songId" : 80018},
+                    {"songId" : 63122},
+                    {"songId" : 63123},
+                    {"songId" : 63204},
+                    {"songId" : 62005},
+                    {"songId" : 62006},
+                    {"songId" : 63103},
+                    {"songId" : 69008},
+                    {"songId" : 68008},
+                    {"songId" : 68108},
+                    {"songId" : 80002},
+                    {"songId" : 64005},
+                    {"songId" : 69018},
+                    {"songId" : 68002},
+                    {"songId" : 68001},
+                    {"songId" : 82005},
+                    {"songId" : 82006},
+                    {"songId" : 82007},
+                    {"songId" : 82011},
+                    {"songId" : 65102},
+                    {"songId" : 68106},
+                    {"songId" : 64003},
+                    {"songId" : 62021}
                 ]
             },
             "charList": {
