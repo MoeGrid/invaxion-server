@@ -113,7 +113,8 @@ module.exports = async function (accId = 1, charId = 1, charName = "6031", headI
                     {"songId" : 65102},
                     {"songId" : 68106},
                     {"songId" : 64003},
-                    {"songId" : 62021}
+                    {"songId" : 62021},
+                    {"songId" : 65036}
                 ]
             },
             "charList": {
