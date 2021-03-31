@@ -18,11 +18,11 @@ function pad(num, n = 9) {
     return num;
 }
 
-handlers.set(3, (req, res) => {  //gate
+handlers.set(1003, (req, res) => {  //gate
     logger.info('上报游戏时间');
 });
 
-handlers.set(5, (req, res, now, sessionid) => {  //gate
+handlers.set(1005, (req, res, now, sessionid) => {  //gate
     logger.info('登陆入口检测');
     let accId = req.data["accId"];
     let token = req.data["token"];
@@ -60,7 +60,7 @@ handlers.set(5, (req, res, now, sessionid) => {  //gate
 
 });
 
-handlers.set(7, async (req, res, now, sessionid) => {  //gate
+handlers.set(1007, async (req, res, now, sessionid) => {  //gate
     logger.info('新建角色的进入游戏');
     let db = new sqlite3.Database(dbname, function (err) {
         if (err) throw err;
@@ -96,7 +96,7 @@ handlers.set(7, async (req, res, now, sessionid) => {  //gate
 
 });
 
-handlers.set(8, async (req, res, now, sessionid) => { //gate
+handlers.set(1008, async (req, res, now, sessionid) => { //gate
     logger.info('进入游戏');
     let db = new sqlite3.Database(dbname, function (err) {
         if (err) throw err;
@@ -117,7 +117,20 @@ handlers.set(2, (req, res) => {
 
 handlers.set(4, (req, res, now, sessionid) => {
     logger.info('完成打歌');
+    let db = new sqlite3.Database(dbname, function (err) {
+        if (err) throw err;
+    });
     let songInfo = req.data["data"];
+    let totalScore = songInfo["totalScore"], total4KScore = songInfo["total4KScore"], total6KScore = songInfo["total6KScore"], total8KScore = songInfo["total8KScore"];
+    db.run("UPDATE acc_data SET totalScore = $totalScore, total4KScore = $total4KScore, total6KScore = $total6KScore, total8KScore = $total8KScore WHERE sessionid = $sessionid;", {
+        $totalScore: totalScore,
+        $total4KScore: total4KScore,
+        $total6KScore: total6KScore,
+        $total8KScore: total8KScore,
+        $sessionid: sessionid
+    }, function (err) {
+        if (err) throw err;
+    });
     let songId = songInfo["songId"];
     let difficulty = songInfo["difficulty"];
     let mode = songInfo["mode"];
@@ -131,9 +144,7 @@ handlers.set(4, (req, res, now, sessionid) => {
         isAllMax : songInfo["isAllMax"],
         time : Date.now()
     };
-    let db = new sqlite3.Database(dbname, function (err) {
-        if (err) throw err;
-    });
+
     db.get("select * from acc_data where sessionid = $sessionid;", {$sessionid: sessionid}, function (err, data) {
         if (err) throw err;
         let charId = data["charId"];
@@ -247,7 +258,7 @@ handlers.set(6, (req, res) => {
                     time : score[mode][difficulty]["time"]
                 });
             }
-            scoreList.sort(function (a,b){return (b["score"] === a["score"]) ? a["time"] - b["time"] : b["score"] - a["score"]})
+            scoreList.sort(function (a,b){return (b["score"] === a["score"]) ? a["time"] - b["time"] : b["score"] - a["score"]});
             let rankList = [];
             for (let i = 0; i < scoreList.length; i++){
                 let name = " ";
@@ -279,6 +290,66 @@ handlers.set(6, (req, res) => {
         });
     });
 
+});
+
+handlers.set(8, (req, res) => {
+    logger.info('排行榜');
+    let db = new sqlite3.Database(dbname, function (err) {
+        if (err) throw err;
+    });
+    let rankType = req.data["type"];
+    let sqlReqStr = "";
+    if (rankType === 0) sqlReqStr = "totalScore";
+    else if (rankType === 5) sqlReqStr = "total4KScore";
+    else if (rankType === 6) sqlReqStr = "total6KScore";
+    else if (rankType === 7) sqlReqStr = "total8KScore";
+    else return;
+    db.all("select charId, name, country, headId, " + sqlReqStr + " from acc_data",function (err,data){
+        if (err) throw err;
+        let scoreList = [];
+        for(let i = 0; i < data.length; i++){
+            if (data[i][sqlReqStr] === 0) continue;
+            scoreList.push({
+                charName : data[i]["name"],
+                headId : data[i]["headId"],
+                score : data[i][sqlReqStr],
+                country : data[i]["country"],
+                teamName: "",
+                titleId : 10001
+            })
+        }
+        scoreList.sort(function (a,b){return b["score"] - a["score"]});
+        for(let i = 0; i < scoreList.length; i++){
+            scoreList[i]["rank"] = i + 1;
+        }
+        if (scoreList.length === 0) scoreList.push({
+                rank: 1,
+                charName: "暂时无人游玩",
+                score: 1,
+                headId: 10010,
+                country: 1,
+                teamName: "",
+                titleId: 10001
+            },
+            {
+                rank: 2,
+                charName: "快来争当第一",
+                score: 2,
+                headId: 10010,
+                charId: "000000000",
+                country: 1,
+                teamName: "",
+                titleId: 10001
+            });
+        res.write({
+            mainCmd: 5,
+            paraCmd: 9,
+            data: {
+                list : scoreList,
+                type : rankType,
+            }
+        });
+    });
 });
 
 handlers.set(30, (req, res, now, sessionid) => {
@@ -374,7 +445,7 @@ handlers.set(100, (req, res) => {
 });
 
 async function dispatch(req, res, now, sessionid) {
-    const handler = handlers.get(req.paraCmd);
+    const handler = handlers.get((req.mainCmd === 1 || req.mainCmd === 3) ? req.paraCmd + 1000 : req.paraCmd);
     if (!handler)
         logger.error('Handler not implemented! paraCmd %d', req.paraCmd);
     return handler(req, res, now, sessionid);
