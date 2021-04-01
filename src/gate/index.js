@@ -77,18 +77,19 @@ handlers.set(1007, async (req, res, now, sessionid) => {  //gate
             if (err) throw err;
             db.get("select * from acc_data where sessionid = $sessionid;", {$sessionid: sessionid}, async function (err, data) {
                 if (err) throw err;
+                let charId = Math.round(data["accId"] + 4000000000).toString()
                 res.write({
                     mainCmd: 5,
                     paraCmd: 1,
-                    data: await Ntf_CharacterFullData(data["accId"], pad(data["accId"]), data["name"], data["headId"], data["selectCharId"], data["selectThemeId"])
+                    data: await Ntf_CharacterFullData(data["accId"], charId, data["name"], data["headId"], data["selectCharId"], data["selectThemeId"])
                 });
                 db.run("UPDATE acc_data SET charId = $charId WHERE sessionid = $sessionid;", {
-                    $charId: pad(data["accId"] + 4000000000),
+                    $charId: charId,
                     $sessionid: sessionid
                 }, function (err) {
                     if (err) throw err;
                 });
-                db.run("INSERT INTO char_data(charId) VALUES($charId)", {$charId: pad(data["accId"])}, function (err) {
+                db.run("INSERT INTO char_data(charId) VALUES($charId)", {$charId : charId}, function (err) {
                     if (err) throw err;
                 });
             });
