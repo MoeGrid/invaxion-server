@@ -83,7 +83,7 @@ handlers.set(1007, async (req, res, now, sessionid) => {  //gate
                     data: await Ntf_CharacterFullData(data["accId"], pad(data["accId"]), data["name"], data["headId"], data["selectCharId"], data["selectThemeId"])
                 });
                 db.run("UPDATE acc_data SET charId = $charId WHERE sessionid = $sessionid;", {
-                    $charId: pad(data["accId"]),
+                    $charId: pad(data["accId"] + 4000000000),
                     $sessionid: sessionid
                 }, function (err) {
                     if (err) throw err;
