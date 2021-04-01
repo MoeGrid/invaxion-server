@@ -185,7 +185,7 @@ handlers.set(4, (req, res, now, sessionid) => {
                                 maxExp: 0
                             }
                         },
-                        newRank: newRank
+                        newRank: 0
                     }
                 });
                 songInfoAll[mode][difficulty] = songInfo;
