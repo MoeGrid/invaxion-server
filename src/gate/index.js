@@ -89,8 +89,12 @@ handlers.set(1007, async (req, res, now, sessionid) => {  //gate
                 }, function (err) {
                     if (err) throw err;
                 });
-                db.run("INSERT INTO char_data(charId) VALUES($charId)", {$charId : charId}, function (err) {
+                db.get("select charId from char_data where charId = $charId;", {$charId : charId}, function (err,data) {
                     if (err) throw err;
+                    if(data !== undefined)return;
+                    db.run("INSERT INTO char_data(charId) VALUES($charId)", {$charId : charId}, function (err) {
+                        if (err) throw err;
+                    });
                 });
             });
         });
