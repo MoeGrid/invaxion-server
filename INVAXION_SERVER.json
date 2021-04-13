@@ -1,0 +1,19 @@
+{
+  "apps": [
+    {
+      "name": "INVAXION_SERVER",
+      "script": "./src/index.js",
+      "instances": 0,
+      "instance_var": "INSTANCE_ID",
+      "cwd": "./",
+      "error_file": "./logs/app-err.log",
+      "out_file": "./logs/app-out.log",
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm:ss",
+      "autorestart": true,
+      "env": {
+        "TZ": "Asia/Shanghai"
+      }
+    }
+  ]
+}
