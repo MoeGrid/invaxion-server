@@ -8,6 +8,7 @@ const logger = log4js.getLogger('app:gate:handler');
 
 const handlers = new Map();
 const dbname = "db.db"
+const rankListLength = 100;
 
 function pad(num, n = 9) {
     let len = num.toString().length;
@@ -266,6 +267,7 @@ handlers.set(6, (req, res) => {
             scoreList.sort(function (a,b){return (b["score"] === a["score"]) ? a["time"] - b["time"] : b["score"] - a["score"]});
             let rankList = [];
             for (let i = 0; i < scoreList.length; i++){
+                if (i > rankListLength)break;
                 let name = " ";
                 let country = 2;
                 let headId = 10010;
@@ -324,10 +326,12 @@ handlers.set(8, (req, res) => {
             })
         }
         scoreList.sort(function (a,b){return b["score"] - a["score"]});
-        for(let i = 0; i < scoreList.length; i++){
+        let sendScoreList=[];
+        for(let i = 0; i < scoreList.length && i < rankListLength; i++){
             scoreList[i]["rank"] = i + 1;
+            sendScoreList.push(scoreList[i]);
         }
-        if (scoreList.length === 0) scoreList.push({
+        if (scoreList.length === 0) sendScoreList.push({
                 rank: 1,
                 charName: "暂时无人游玩",
                 score: 1,
@@ -350,7 +354,7 @@ handlers.set(8, (req, res) => {
             mainCmd: 5,
             paraCmd: 9,
             data: {
-                list : scoreList,
+                list : sendScoreList,
                 type : rankType,
             }
         });
