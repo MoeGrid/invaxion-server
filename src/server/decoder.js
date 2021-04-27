@@ -24,7 +24,7 @@ class Decoder extends stream.Transform {
         pub.data = msg.slice(8, 8 + pub.dataLen);
 
         // 获得proto类型
-        const typeStr = cmd(pub.mainCmd, pub.paraCmd);
+        const typeStr = cmd.lookupType(pub.mainCmd, pub.paraCmd);
         if (!typeStr)
             return callback(new Error(`Unknown paraCmd ${pub.paraCmd}`));
         const type = proto.root.lookupType(typeStr);

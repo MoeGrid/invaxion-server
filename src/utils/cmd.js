@@ -1,234 +1,266 @@
-const loginCmd = new Map();
-loginCmd.set(1, 'cometLogin.Req_RegAccount');
-loginCmd.set(2, 'cometLogin.Ret_RegAccount');
-loginCmd.set(3, 'cometLogin.Req_LoginAccount');
-loginCmd.set(4, 'cometLogin.Ret_LoginAccount');
-loginCmd.set(5, 'cometLogin.Req_FindPassword');
-loginCmd.set(6, 'cometLogin.Ret_FindPassword');
-loginCmd.set(10, 'cometLogin.LoginError');
-loginCmd.set(11, 'cometLogin.Req_QuickToken');
-loginCmd.set(12, 'cometLogin.Ret_QuickToken');
-loginCmd.set(13, 'cometLogin.Req_QuickLogin');
-loginCmd.set(14, 'cometLogin.Ret_QuickLogin');
-loginCmd.set(15, 'cometLogin.Req_ThirdLogin');
-loginCmd.set(16, 'cometLogin.Ret_ThirdLogin');
-loginCmd.set(17, 'cometLogin.Req_BindAccount');
-loginCmd.set(18, 'cometLogin.Ret_BindAccount');
-loginCmd.set(19, 'cometLogin.Req_Announcement');
-loginCmd.set(20, 'cometLogin.Ret_Announcement');
-loginCmd.set(21, 'cometLogin.Req_GameVersion');
-loginCmd.set(22, 'cometLogin.Ret_GameVersion');
-loginCmd.set(23, 'cometLogin.Req_BiliLogin');
-loginCmd.set(24, 'cometLogin.Ret_BiliLogin');
+class GameCmd {
 
-const gateCmd = new Map();
-gateCmd.set(1, 'cometGate.Ntf_GameTime');
-gateCmd.set(2, 'cometGate.Req_UserGameTime');
-gateCmd.set(3, 'cometGate.Ret_UserGameTime');
-gateCmd.set(4, 'cometGate.LoginGateError');
-gateCmd.set(5, 'cometGate.LoginGateVerify');
-gateCmd.set(6, 'cometGate.SelectUserInfoList');
-gateCmd.set(7, 'cometGate.CreateCharacter');
-gateCmd.set(8, 'cometGate.EnterGame');
+    paraCmd = {
+        cometLogin: {
+            Req_RegAccount: 1,
+            Ret_RegAccount: 2,
+            Req_LoginAccount: 3,
+            Ret_LoginAccount: 4,
+            Req_FindPassword: 5,
+            Ret_FindPassword: 6,
+            LoginError: 10,
+            Req_QuickToken: 11,
+            Ret_QuickToken: 12,
+            Req_QuickLogin: 13,
+            Ret_QuickLogin: 14,
+            Req_ThirdLogin: 15,
+            Ret_ThirdLogin: 16,
+            Req_BindAccount: 17,
+            Ret_BindAccount: 18,
+            Req_Announcement: 19,
+            Ret_Announcement: 20,
+            Req_GameVersion: 21,
+            Ret_GameVersion: 22,
+            Req_BiliLogin: 23,
+            Ret_BiliLogin: 24,
+        },
+        cometGate: {
+            Ntf_GameTime: 1,
+            Req_UserGameTime: 2,
+            Ret_UserGameTime: 3,
+            LoginGateError: 4,
+            LoginGateVerify: 5,
+            SelectUserInfoList: 6,
+            CreateCharacter: 7,
+            EnterGame: 8,
+        },
+        cometScene: {
+            Ret_GameError: 0,
+            Ntf_CharacterFullData: 1,
+            Req_BeginSong: 2,
+            Ret_BeginSong: 3,
+            Req_FinishSong: 4,
+            Ret_FinishSong: 5,
+            Req_SingleSongRank: 6,
+            Ret_SingleSongRank: 7,
+            Req_RankInfo: 8,
+            Ret_RankInfo: 9,
+            Req_SetFavorite: 10,
+            Ret_SetFavorite: 11,
+            Req_BackstageGame: 12,
+            Ntf_UpdateInfo: 13,
+            Req_ActivityInfo: 14,
+            Ret_ActivityInfo: 15,
+            Req_ActivityBegin: 16,
+            Ret_ActivityBegin: 17,
+            Req_ActivityFinish: 18,
+            Ret_ActivityFinish: 19,
+            Ntf_ActivityChange: 20,
+            Req_MailList: 21,
+            Ret_MailList: 22,
+            Req_GetMailReward: 23,
+            Ret_GetMailReward: 24,
+            Req_DelMail: 25,
+            Ret_DelMail: 26,
+            Ntf_DelInfo: 27,
+            Req_Guide: 28,
+            Ret_Guide: 29,
+            Req_GuideClear: 91,
+            Ret_GuideClear: 92,
+            Req_ChangeHeadIcon: 30,
+            Ret_ChangeHeadIcon: 31,
+            Req_ChangeCharacter: 32,
+            Ret_ChangeCharacter: 33,
+            Req_ChangeTheme: 34,
+            Ret_ChangeTheme: 35,
+            Req_ShopInfo: 36,
+            Ret_ShopInfo: 37,
+            Req_ShopBuy: 38,
+            Ret_ShopBuy: 39,
+            Req_PieceExchange: 40,
+            Ret_PieceExchange: 41,
+            Req_BattleFieldInfo: 42,
+            Ret_BattleFieldInfo: 43,
+            Req_BattleFieldRankInfo: 44,
+            Ret_BattleFieldRankInfo: 45,
+            Req_BattleFieldBegin: 46,
+            Ret_BattleFieldBegin: 47,
+            Req_BattleFieldFinish: 48,
+            Ret_BattleFieldFinish: 49,
+            Req_SummonInfo: 50,
+            Ret_SummonInfo: 51,
+            Req_Summon: 52,
+            Ret_Summon: 53,
+            Req_SummonWeekReward: 54,
+            Ret_SummonWeekReward: 55,
+            Req_SummonShopBuy: 56,
+            Ret_SummonShopBuy: 57,
+            Req_ChangeLanguage: 58,
+            Ret_ChangeLanguage: 59,
+            Req_Social_SearchPlayer: 60,
+            Ret_Social_SearchPlayer: 61,
+            Req_Social_PlayerProfile: 62,
+            Ret_Social_PlayerProfile: 63,
+            Req_Social_SendAddFriendRequest: 64,
+            Ret_Social_SendAddFriendRequest: 65,
+            Ntf_Social_AddFriendRequest: 66,
+            Req_Social_DelFriend: 67,
+            Ret_Social_DelFriend: 68,
+            Ntf_Social_DelFriend: 69,
+            Req_Social_DisposeFriendRequest: 70,
+            Ret_Social_DisposeFriendRequest: 71,
+            Ntf_Social_DisposeFriendRequest: 72,
+            Req_Social_PublishDynamics: 73,
+            Ret_Social_PublishDynamics: 74,
+            Req_Social_DelDynamics: 75,
+            Ret_Social_DelDynamics: 76,
+            Req_Social_FriendDynamics: 77,
+            Ret_Social_FriendDynamics: 78,
+            Ntf_Social_FriendPublicDynamic: 79,
+            Ntf_Social_FriendStatus: 80,
+            Req_Story_Info: 81,
+            Ret_Story_Info: 82,
+            Req_Story_Finish: 83,
+            Ret_Story_Finish: 84,
+            Req_UseItem: 85,
+            Ret_UseItem: 86,
+            Req_Arcade_Info: 87,
+            Ret_Arcade_Info: 88,
+            Req_Arcade_Finish: 89,
+            Ret_Arcade_Finish: 90,
+            Req_ChangeTitle: 97,
+            Ret_ChangeTitle: 98,
+            Ret_Event_GetCommon: 99,
+            Req_Event_Info: 100,
+            Ret_Event_Info: 101,
+            Req_Event_LevelGift: 102,
+            Req_Event_Stamina: 103,
+            Req_Event_NewPlayer: 104,
+            Req_Event_WeekCheckin: 105,
+            Req_Event_Recharge: 106,
+            Ntf_RechangeUpdate: 107,
+            Req_Event_Login: 108,
+            Req_Event_NewCharLogin: 109,
+            Req_Event_NewThemeLogin: 110,
+            Req_Event_NewCharRelease: 111,
+            Req_Event_NewThemeRelease: 112,
+            Ntf_Event_NewReleaseUpdate: 113,
+            Req_Event_Friend: 114,
+            Req_Event_Bili: 115,
+            Req_Team_Create: 120,
+            Ret_Team_Create: 121,
+            Req_Team_Search: 122,
+            Ret_Team_Search: 123,
+            Req_Team_List: 124,
+            Ret_Team_List: 125,
+            Req_Team_Apply: 126,
+            Ret_Team_Apply: 127,
+            Req_Team_Declaration: 128,
+            Ret_Team_Declaration: 129,
+            Req_Team_Info: 130,
+            Ret_Team_Info: 131,
+            Req_Team_Position: 132,
+            Ret_Team_Position: 133,
+            Req_Team_ApplyList: 134,
+            Ret_Team_ApplyList: 135,
+            Req_Team_DealApply: 136,
+            Ret_Team_DealApply: 137,
+            Req_Team_Kick: 138,
+            Ret_Team_Kick: 139,
+            Req_Team_Exit: 140,
+            Ret_Team_Exit: 141,
+            Req_Team_Logs: 142,
+            Ret_Team_Logs: 143,
+            Ntf_Team_Change: 144,
+            Ntf_Team_InfoChange: 145,
+            Ntf_Team_ApplyChange: 146,
+            Req_Team_UploadSong: 147,
+            Ret_Team_UploadSong: 148,
+            Req_Team_ConfimUploadSong: 149,
+            Ret_Team_ConfimUploadSong: 150,
+            Req_Team_BuyItem: 151,
+            Ret_Team_BuyItem: 152,
+            Ntf_Team_BuffList: 153,
+            Req_PreRank_Info: 160,
+            Ret_PreRank_Info: 161,
+            Req_PreRank_Begin: 162,
+            Ret_PreRank_Begin: 163,
+            Req_PreRank_End: 164,
+            Ret_PreRank_End: 165,
+            Req_PreRank_RankList: 166,
+            Ret_PreRank_RankList: 167,
+            Req_PVP_BeginMatching: 170,
+            Ret_PVP_BeginMatching: 171,
+            Req_PVP_EndMatching: 172,
+            Ret_PVP_EndMatching: 173,
+            Ntf_PVP_MatchSuccess: 174,
+            Req_PVP_MatchConfim: 175,
+            Ret_PVP_MatchConfim: 176,
+            Ntf_PVP_MatchConfim: 177,
+            Ntf_PVP_StartLoading: 178,
+            Req_PVP_FinishLoading: 179,
+            Ntf_PVP_FinishLoading: 180,
+            Ntf_PVP_StartGame: 181,
+            Req_PVP_SyncScore: 182,
+            Ntf_PVP_SyncScore: 183,
+            Req_PVP_UseSkill: 184,
+            Ntf_PVP_UseSkill: 185,
+            Req_PVP_FinishGame: 186,
+            Ntf_PVP_FinishGame: 187,
+            Req_PVP_CurState: 188,
+            Ret_PVP_CurState: 189,
+            Req_BuyProduct: 231,
+            Ret_BuyProduct: 232,
+            Req_VerifyIOSReceipt: 233,
+            Ret_VerifyIOSReceipt: 234,
+            Req_MissingOrder: 235,
+            Ret_MissingOrder: 236,
+            Req_SendOrder: 237,
+            Ret_SendOrder: 238,
+            Req_VerifyGooglePay: 239,
+            Ret_VerifyGooglePay: 240,
+            Req_IOSAppReceipt: 241,
+            Ret_IOSAppReceipt: 242,
+            Req_TestVerify: 243,
+            Ret_TestVerify: 244,
+        },
+    };
 
-const sceneCmd = new Map();
-sceneCmd.set(0, 'cometScene.Ret_GameError');
-sceneCmd.set(1, 'cometScene.Ntf_CharacterFullData');
-sceneCmd.set(2, 'cometScene.Req_BeginSong');
-sceneCmd.set(3, 'cometScene.Ret_BeginSong');
-sceneCmd.set(4, 'cometScene.Req_FinishSong');
-sceneCmd.set(5, 'cometScene.Ret_FinishSong');
-sceneCmd.set(6, 'cometScene.Req_SingleSongRank');
-sceneCmd.set(7, 'cometScene.Ret_SingleSongRank');
-sceneCmd.set(8, 'cometScene.Req_RankInfo');
-sceneCmd.set(9, 'cometScene.Ret_RankInfo');
-sceneCmd.set(10, 'cometScene.Req_SetFavorite');
-sceneCmd.set(11, 'cometScene.Ret_SetFavorite');
-sceneCmd.set(12, 'cometScene.Req_BackstageGame');
-sceneCmd.set(13, 'cometScene.Ntf_UpdateInfo');
-sceneCmd.set(14, 'cometScene.Req_ActivityInfo');
-sceneCmd.set(15, 'cometScene.Ret_ActivityInfo');
-sceneCmd.set(16, 'cometScene.Req_ActivityBegin');
-sceneCmd.set(17, 'cometScene.Ret_ActivityBegin');
-sceneCmd.set(18, 'cometScene.Req_ActivityFinish');
-sceneCmd.set(19, 'cometScene.Ret_ActivityFinish');
-sceneCmd.set(20, 'cometScene.Ntf_ActivityChange');
-sceneCmd.set(21, 'cometScene.Req_MailList');
-sceneCmd.set(22, 'cometScene.Ret_MailList');
-sceneCmd.set(23, 'cometScene.Req_GetMailReward');
-sceneCmd.set(24, 'cometScene.Ret_GetMailReward');
-sceneCmd.set(25, 'cometScene.Req_DelMail');
-sceneCmd.set(26, 'cometScene.Ret_DelMail');
-sceneCmd.set(27, 'cometScene.Ntf_DelInfo');
-sceneCmd.set(28, 'cometScene.Req_Guide');
-sceneCmd.set(29, 'cometScene.Ret_Guide');
-sceneCmd.set(91, 'cometScene.Req_GuideClear');
-sceneCmd.set(92, 'cometScene.Ret_GuideClear');
-sceneCmd.set(30, 'cometScene.Req_ChangeHeadIcon');
-sceneCmd.set(31, 'cometScene.Ret_ChangeHeadIcon');
-sceneCmd.set(32, 'cometScene.Req_ChangeCharacter');
-sceneCmd.set(33, 'cometScene.Ret_ChangeCharacter');
-sceneCmd.set(34, 'cometScene.Req_ChangeTheme');
-sceneCmd.set(35, 'cometScene.Ret_ChangeTheme');
-sceneCmd.set(36, 'cometScene.Req_ShopInfo');
-sceneCmd.set(37, 'cometScene.Ret_ShopInfo');
-sceneCmd.set(38, 'cometScene.Req_ShopBuy');
-sceneCmd.set(39, 'cometScene.Ret_ShopBuy');
-sceneCmd.set(40, 'cometScene.Req_PieceExchange');
-sceneCmd.set(41, 'cometScene.Ret_PieceExchange');
-sceneCmd.set(42, 'cometScene.Req_BattleFieldInfo');
-sceneCmd.set(43, 'cometScene.Ret_BattleFieldInfo');
-sceneCmd.set(44, 'cometScene.Req_BattleFieldRankInfo');
-sceneCmd.set(45, 'cometScene.Ret_BattleFieldRankInfo');
-sceneCmd.set(46, 'cometScene.Req_BattleFieldBegin');
-sceneCmd.set(47, 'cometScene.Ret_BattleFieldBegin');
-sceneCmd.set(48, 'cometScene.Req_BattleFieldFinish');
-sceneCmd.set(49, 'cometScene.Ret_BattleFieldFinish');
-sceneCmd.set(50, 'cometScene.Req_SummonInfo');
-sceneCmd.set(51, 'cometScene.Ret_SummonInfo');
-sceneCmd.set(52, 'cometScene.Req_Summon');
-sceneCmd.set(53, 'cometScene.Ret_Summon');
-sceneCmd.set(54, 'cometScene.Req_SummonWeekReward');
-sceneCmd.set(55, 'cometScene.Ret_SummonWeekReward');
-sceneCmd.set(56, 'cometScene.Req_SummonShopBuy');
-sceneCmd.set(57, 'cometScene.Ret_SummonShopBuy');
-sceneCmd.set(58, 'cometScene.Req_ChangeLanguage');
-sceneCmd.set(59, 'cometScene.Ret_ChangeLanguage');
-sceneCmd.set(60, 'cometScene.Req_Social_SearchPlayer');
-sceneCmd.set(61, 'cometScene.Ret_Social_SearchPlayer');
-sceneCmd.set(62, 'cometScene.Req_Social_PlayerProfile');
-sceneCmd.set(63, 'cometScene.Ret_Social_PlayerProfile');
-sceneCmd.set(64, 'cometScene.Req_Social_SendAddFriendRequest');
-sceneCmd.set(65, 'cometScene.Ret_Social_SendAddFriendRequest');
-sceneCmd.set(66, 'cometScene.Ntf_Social_AddFriendRequest');
-sceneCmd.set(67, 'cometScene.Req_Social_DelFriend');
-sceneCmd.set(68, 'cometScene.Ret_Social_DelFriend');
-sceneCmd.set(69, 'cometScene.Ntf_Social_DelFriend');
-sceneCmd.set(70, 'cometScene.Req_Social_DisposeFriendRequest');
-sceneCmd.set(71, 'cometScene.Ret_Social_DisposeFriendRequest');
-sceneCmd.set(72, 'cometScene.Ntf_Social_DisposeFriendRequest');
-sceneCmd.set(73, 'cometScene.Req_Social_PublishDynamics');
-sceneCmd.set(74, 'cometScene.Ret_Social_PublishDynamics');
-sceneCmd.set(75, 'cometScene.Req_Social_DelDynamics');
-sceneCmd.set(76, 'cometScene.Ret_Social_DelDynamics');
-sceneCmd.set(77, 'cometScene.Req_Social_FriendDynamics');
-sceneCmd.set(78, 'cometScene.Ret_Social_FriendDynamics');
-sceneCmd.set(79, 'cometScene.Ntf_Social_FriendPublicDynamic');
-sceneCmd.set(80, 'cometScene.Ntf_Social_FriendStatus');
-sceneCmd.set(81, 'cometScene.Req_Story_Info');
-sceneCmd.set(82, 'cometScene.Ret_Story_Info');
-sceneCmd.set(83, 'cometScene.Req_Story_Finish');
-sceneCmd.set(84, 'cometScene.Ret_Story_Finish');
-sceneCmd.set(85, 'cometScene.Req_UseItem');
-sceneCmd.set(86, 'cometScene.Ret_UseItem');
-sceneCmd.set(87, 'cometScene.Req_Arcade_Info');
-sceneCmd.set(88, 'cometScene.Ret_Arcade_Info');
-sceneCmd.set(89, 'cometScene.Req_Arcade_Finish');
-sceneCmd.set(90, 'cometScene.Ret_Arcade_Finish');
-sceneCmd.set(97, 'cometScene.Req_ChangeTitle');
-sceneCmd.set(98, 'cometScene.Ret_ChangeTitle');
-sceneCmd.set(99, 'cometScene.Ret_Event_GetCommon');
-sceneCmd.set(100, 'cometScene.Req_Event_Info');
-sceneCmd.set(101, 'cometScene.Ret_Event_Info');
-sceneCmd.set(102, 'cometScene.Req_Event_LevelGift');
-sceneCmd.set(103, 'cometScene.Req_Event_Stamina');
-sceneCmd.set(104, 'cometScene.Req_Event_NewPlayer');
-sceneCmd.set(105, 'cometScene.Req_Event_WeekCheckin');
-sceneCmd.set(106, 'cometScene.Req_Event_Recharge');
-sceneCmd.set(107, 'cometScene.Ntf_RechangeUpdate');
-sceneCmd.set(108, 'cometScene.Req_Event_Login');
-sceneCmd.set(109, 'cometScene.Req_Event_NewCharLogin');
-sceneCmd.set(110, 'cometScene.Req_Event_NewThemeLogin');
-sceneCmd.set(111, 'cometScene.Req_Event_NewCharRelease');
-sceneCmd.set(112, 'cometScene.Req_Event_NewThemeRelease');
-sceneCmd.set(113, 'cometScene.Ntf_Event_NewReleaseUpdate');
-sceneCmd.set(114, 'cometScene.Req_Event_Friend');
-sceneCmd.set(115, 'cometScene.Req_Event_Bili');
-sceneCmd.set(120, 'cometScene.Req_Team_Create');
-sceneCmd.set(121, 'cometScene.Ret_Team_Create');
-sceneCmd.set(122, 'cometScene.Req_Team_Search');
-sceneCmd.set(123, 'cometScene.Ret_Team_Search');
-sceneCmd.set(124, 'cometScene.Req_Team_List');
-sceneCmd.set(125, 'cometScene.Ret_Team_List');
-sceneCmd.set(126, 'cometScene.Req_Team_Apply');
-sceneCmd.set(127, 'cometScene.Ret_Team_Apply');
-sceneCmd.set(128, 'cometScene.Req_Team_Declaration');
-sceneCmd.set(129, 'cometScene.Ret_Team_Declaration');
-sceneCmd.set(130, 'cometScene.Req_Team_Info');
-sceneCmd.set(131, 'cometScene.Ret_Team_Info');
-sceneCmd.set(132, 'cometScene.Req_Team_Position');
-sceneCmd.set(133, 'cometScene.Ret_Team_Position');
-sceneCmd.set(134, 'cometScene.Req_Team_ApplyList');
-sceneCmd.set(135, 'cometScene.Ret_Team_ApplyList');
-sceneCmd.set(136, 'cometScene.Req_Team_DealApply');
-sceneCmd.set(137, 'cometScene.Ret_Team_DealApply');
-sceneCmd.set(138, 'cometScene.Req_Team_Kick');
-sceneCmd.set(139, 'cometScene.Ret_Team_Kick');
-sceneCmd.set(140, 'cometScene.Req_Team_Exit');
-sceneCmd.set(141, 'cometScene.Ret_Team_Exit');
-sceneCmd.set(142, 'cometScene.Req_Team_Logs');
-sceneCmd.set(143, 'cometScene.Ret_Team_Logs');
-sceneCmd.set(144, 'cometScene.Ntf_Team_Change');
-sceneCmd.set(145, 'cometScene.Ntf_Team_InfoChange');
-sceneCmd.set(146, 'cometScene.Ntf_Team_ApplyChange');
-sceneCmd.set(147, 'cometScene.Req_Team_UploadSong');
-sceneCmd.set(148, 'cometScene.Ret_Team_UploadSong');
-sceneCmd.set(149, 'cometScene.Req_Team_ConfimUploadSong');
-sceneCmd.set(150, 'cometScene.Ret_Team_ConfimUploadSong');
-sceneCmd.set(151, 'cometScene.Req_Team_BuyItem');
-sceneCmd.set(152, 'cometScene.Ret_Team_BuyItem');
-sceneCmd.set(153, 'cometScene.Ntf_Team_BuffList');
-sceneCmd.set(160, 'cometScene.Req_PreRank_Info');
-sceneCmd.set(161, 'cometScene.Ret_PreRank_Info');
-sceneCmd.set(162, 'cometScene.Req_PreRank_Begin');
-sceneCmd.set(163, 'cometScene.Ret_PreRank_Begin');
-sceneCmd.set(164, 'cometScene.Req_PreRank_End');
-sceneCmd.set(165, 'cometScene.Ret_PreRank_End');
-sceneCmd.set(166, 'cometScene.Req_PreRank_RankList');
-sceneCmd.set(167, 'cometScene.Ret_PreRank_RankList');
-sceneCmd.set(170, 'cometScene.Req_PVP_BeginMatching');
-sceneCmd.set(171, 'cometScene.Ret_PVP_BeginMatching');
-sceneCmd.set(172, 'cometScene.Req_PVP_EndMatching');
-sceneCmd.set(173, 'cometScene.Ret_PVP_EndMatching');
-sceneCmd.set(174, 'cometScene.Ntf_PVP_MatchSuccess');
-sceneCmd.set(175, 'cometScene.Req_PVP_MatchConfim');
-sceneCmd.set(176, 'cometScene.Ret_PVP_MatchConfim');
-sceneCmd.set(177, 'cometScene.Ntf_PVP_MatchConfim');
-sceneCmd.set(178, 'cometScene.Ntf_PVP_StartLoading');
-sceneCmd.set(179, 'cometScene.Req_PVP_FinishLoading');
-sceneCmd.set(180, 'cometScene.Ntf_PVP_FinishLoading');
-sceneCmd.set(181, 'cometScene.Ntf_PVP_StartGame');
-sceneCmd.set(182, 'cometScene.Req_PVP_SyncScore');
-sceneCmd.set(183, 'cometScene.Ntf_PVP_SyncScore');
-sceneCmd.set(184, 'cometScene.Req_PVP_UseSkill');
-sceneCmd.set(185, 'cometScene.Ntf_PVP_UseSkill');
-sceneCmd.set(186, 'cometScene.Req_PVP_FinishGame');
-sceneCmd.set(187, 'cometScene.Ntf_PVP_FinishGame');
-sceneCmd.set(188, 'cometScene.Req_PVP_CurState');
-sceneCmd.set(189, 'cometScene.Ret_PVP_CurState');
-sceneCmd.set(231, 'cometScene.Req_BuyProduct');
-sceneCmd.set(232, 'cometScene.Ret_BuyProduct');
-sceneCmd.set(233, 'cometScene.Req_VerifyIOSReceipt');
-sceneCmd.set(234, 'cometScene.Ret_VerifyIOSReceipt');
-sceneCmd.set(235, 'cometScene.Req_MissingOrder');
-sceneCmd.set(236, 'cometScene.Ret_MissingOrder');
-sceneCmd.set(237, 'cometScene.Req_SendOrder');
-sceneCmd.set(238, 'cometScene.Ret_SendOrder');
-sceneCmd.set(239, 'cometScene.Req_VerifyGooglePay');
-sceneCmd.set(240, 'cometScene.Ret_VerifyGooglePay');
-sceneCmd.set(241, 'cometScene.Req_IOSAppReceipt');
-sceneCmd.set(242, 'cometScene.Ret_IOSAppReceipt');
-sceneCmd.set(243, 'cometScene.Req_TestVerify');
-sceneCmd.set(244, 'cometScene.Ret_TestVerify');
+    mainCmd = {
+        Time: 1,
+        Login: 2,
+        Select: 3,
+        Game: 5,
+    };
 
+    _link = {
+        'Time': 'cometLogin',
+        'Login': 'cometScene',
+        'Select': 'cometGate',
+        'Game': 'cometGate',
+    };
 
-const cmd = new Map();
+    _cmdCache = {};
 
-cmd.set(1, gateCmd); // MainCmd_Time
-cmd.set(2, loginCmd); // MainCmd_Login
-cmd.set(3, gateCmd); // MainCmd_Select
-cmd.set(5, sceneCmd); // MainCmd_Game
+    constructor() {
+        for (let key in this._link) {
+            this._cmdCache[this.mainCmd[key]] = this._invert(this._link[key]);
+        }
+    }
 
-module.exports = function (mainCmd, paraCmd) {
-    return cmd.get(mainCmd).get(paraCmd);
+    _invert(pkg) {
+        const obj = this.paraCmd[pkg];
+        const ret = {};
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key))
+                ret[obj[key]] = `${pkg}.${key}`;
+        }
+        return ret;
+    }
+
+    lookupType(main, para) {
+        return this._cmdCache[main][para];
+    }
 }
+
+module.exports = new GameCmd();

@@ -2,27 +2,28 @@ const log4js = require('log4js');
 const logger = log4js.getLogger('app:login:handler');
 const sqlite3 = require("sqlite3").verbose();
 const crypto = require('crypto');
+const {mainCmd, paraCmd} = require('../utils/cmd');
 
 const handlers = new Map();
 const dbname = "db.db"
 
-handlers.set(5, (req, res) => {
-    logger.debug('Req_FindPassword');
+// handlers.set(paraCmd.cometLogin.Req_FindPassword, (req, res) => {
+//     logger.debug('Req_FindPassword');
+//     res.write({
+//         mainCmd: mainCmd.Login,
+//         paraCmd: paraCmd.cometLogin.Ret_FindPassword,
+//         data: {
+//             data: {
+//                 gateIP: '127.0.0.1',
+//                 gatePort: 20021,
+//                 token: '5dec0ad9c11af4860d551dfd44aef446',
+//                 accId: 25882
+//             }
+//         }
+//     });
+// });
 
-    res.write({
-        mainCmd: 2,
-        paraCmd: 6,
-        data: {
-            data: {
-                gateIP: '127.0.0.1',
-                gatePort: 20021,
-                token: '5dec0ad9c11af4860d551dfd44aef446',
-                accId: 25882
-            }
-        }
-    });
-});
-handlers.set(15, (req, res) => {
+handlers.set(paraCmd.cometLogin.Req_ThirdLogin, (req, res) => {
     logger.debug('ThirdLogin');
     let db = new sqlite3.Database(dbname, function (err) {
         if (err) throw err;
@@ -55,8 +56,8 @@ handlers.set(15, (req, res) => {
         accId = await fun();
         db.close();
         res.write({
-            mainCmd: 2,
-            paraCmd: 16,
+            mainCmd: mainCmd.Login,
+            paraCmd: paraCmd.cometLogin.Ret_ThirdLogin,
             data: {
                 data: {
                     gateIP: '127.0.0.1',
@@ -68,12 +69,12 @@ handlers.set(15, (req, res) => {
         });
     })()
 });
-handlers.set(21, (req, res) => {
-    logger.debug('GameVersion');
 
+handlers.set(paraCmd.cometLogin.Req_GameVersion, (req, res) => {
+    logger.debug('GameVersion');
     res.write({
-        mainCmd: 2,
-        paraCmd: 22,
+        mainCmd: mainCmd.Login,
+        paraCmd: paraCmd.cometLogin.Ret_GameVersion,
         data: {
             announcementContent: '',
             version: '0.1.0',
